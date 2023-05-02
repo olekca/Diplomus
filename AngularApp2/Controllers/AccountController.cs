@@ -23,7 +23,7 @@ namespace AngularApp2.Controllers
         
         public AccountController(){}
         [HttpGet("login")]
-        public string login(string email, string password)//not tested
+        public string Login(string email, string password)//not tested
         {
             LoginDTO res = new LoginDTO();
             using (DiplomusContext db = new DiplomusContext())
@@ -36,6 +36,26 @@ namespace AngularApp2.Controllers
             }
                 return JsonConvert.SerializeObject(res);
         }
+        [HttpPost("Register")]
+        public string Register(Users user)//not tested
+        {
+            RegisterDTO res = new RegisterDTO();
+            using (DiplomusContext db = new DiplomusContext())
+            {
+                Users newUser = db.Users.Where(u => u.Email == user.Email).First();
+                if (newUser == null)
+                {
+                    db.Users.Add(user);
+                    res.IsSuccesful(user);
+                }
+                else
+                {
+                    res.UserExisting();
+                }
+            }
+            return JsonConvert.SerializeObject(res);
+            
+        }        
         
     }
 }
