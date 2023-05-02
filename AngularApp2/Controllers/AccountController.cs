@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
+using AngularApp2.Models.Entity;
+using AngularApp2.Models;
+using Newtonsoft.Json;
 namespace AngularApp2.Controllers
 {
     
@@ -18,28 +20,22 @@ namespace AngularApp2.Controllers
         {
             return "yeh";
         }
-        private readonly UserManager<User> _userManager;
-        private readonly IMapper _mapper;
-        public AccountController()
+        
+        public AccountController(){}
+        [HttpGet("login")]
+        public string login(string email, string password)//not tested
         {
-            
-        }
-        [HttpPost("Registration")]
-        public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDto userForRegistration)
-        {
-            if (userForRegistration == null || !ModelState.IsValid)
-                return BadRequest();
-
-            var user = _mapper.Map<User>(userForRegistration);
-            var result = await _userManager.CreateAsync(user, userForRegistration.Password);
-            if (!result.Succeeded)
+            LoginDTO res = new LoginDTO();
+            using (DiplomusContext db = new DiplomusContext())
             {
-                var errors = result.Errors.Select(e => e.Description);
-
-                return BadRequest(new RegistrationResponseDto { Errors = errors });
+                Users user = db.Users.Where(u => u.Email == email && u.Password == password).First();
+                if (user != null)
+                {
+                    res.UserAuthorized(user);
+                }
             }
-
-            return StatusCode(201);
+                return JsonConvert.SerializeObject(res);
         }
+        
     }
 }
