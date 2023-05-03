@@ -23,12 +23,12 @@ namespace AngularApp2.Controllers
         
         public AccountController(){}
         [HttpGet("login")]
-        public string Login(string email, string password)//not tested
+        public string Login(string email, string password)//tested a little
         {
             LoginDTO res = new LoginDTO();
             using (DiplomusContext db = new DiplomusContext())
             {
-                Users user = db.Users.Where(u => u.Email == email && u.Password == password).First();
+                Users user = db.Users.Where(u => u.Email == email && u.Password == password).FirstOrDefault();
                 if (user != null)
                 {
                     res.UserAuthorized(user);
@@ -42,10 +42,11 @@ namespace AngularApp2.Controllers
             RegisterDTO res = new RegisterDTO();
             using (DiplomusContext db = new DiplomusContext())
             {
-                Users newUser = db.Users.Where(u => u.Email == user.Email).First();
+                Users newUser = db.Users.Where(u => u.Email == user.Email).FirstOrDefault();
                 if (newUser == null)
                 {
-                    db.Users.Add(user);
+                    db.Users.Add(user);                   
+                    db.SaveChanges();
                     res.IsSuccesful(user);
                 }
                 else
