@@ -41,7 +41,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
-//Scaffold-DbContext "Host=localhost;Port=5432;Database=Diplomus;Username=postgres;Password=qwerty123456" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models/Entity -Tables "users" -NoPluralize
+//Scaffold-DbContext "Host=localhost;Port=5432;Database=diplomus;Username=postgres;Password=qwerty123456" Npgsql.EntityFrameworkCore.PostgreSQL -OutputDir Models/Entity -Tables "nutrients" -NoPluralize
 app.MapFallbackToFile("index.html");
 
 app.Run();

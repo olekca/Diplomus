@@ -37,7 +37,7 @@ namespace AngularApp2.Controllers
                 return JsonConvert.SerializeObject(res);
         }
         [HttpPost("Register")]
-        public string Register(Users user)//not tested
+        public string Register(Users user)//tested a little, dont forget to add not sended data to user (like role). Do it when go to angular
         {
             RegisterDTO res = new RegisterDTO();
             using (DiplomusContext db = new DiplomusContext())
