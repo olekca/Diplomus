@@ -56,7 +56,66 @@ namespace AngularApp2.Controllers
             }
             return JsonConvert.SerializeObject(res);
             
-        }        
-        
+        }
+
+        [HttpPost("ChangeEmail")]
+        public IActionResult ChangeEmail(int user_id, string email)
+        {
+            using (DiplomusContext db = new DiplomusContext())
+            {
+                Users user = db.Users.Where(u => u.UserId == user_id).FirstOrDefault();
+                if (user != null)
+                {
+                    user.Email = email;
+                    db.SaveChanges();
+                    return StatusCode(200);
+                }
+                else
+                {
+                    return StatusCode(400);
+                }
+            }
+            
+        }
+
+        [HttpPost("ChangeDob")]
+        public IActionResult ChangeDob(int user_id, string date)
+        {
+            using (DiplomusContext db = new DiplomusContext())
+            {
+                Users user = db.Users.Where(u => u.UserId == user_id).FirstOrDefault();
+                if (user != null)
+                {
+                    user.DayOfBirth = DateOnly.Parse(date);
+                    db.SaveChanges();
+                    return StatusCode(200);
+                }
+                else
+                {
+                    return StatusCode(400);
+                }
+            }
+
+        }
+
+        [HttpPost("ChangeName")]
+        public IActionResult ChangeName(int user_id, string name)
+        {
+            using (DiplomusContext db = new DiplomusContext())
+            {
+                Users user = db.Users.Where(u => u.UserId == user_id).FirstOrDefault();
+                if (user != null)
+                {
+                    user.UserName = name;
+                    db.SaveChanges();
+                    return StatusCode(200);
+                }
+                else
+                {
+                    return StatusCode(400);
+                }
+            }
+
+        }
     }
 }
