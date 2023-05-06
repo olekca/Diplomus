@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using AngularApp2.Models.Entity;
 using AngularApp2.Models;
 using Newtonsoft.Json;
+using System.Xml.Linq;
+
 namespace AngularApp2.Controllers
 {
     
@@ -11,6 +13,7 @@ namespace AngularApp2.Controllers
     [Route("[controller]")]
     public class AccountController : ControllerBase
     {
+        private readonly IConfiguration _configuration;
         public string Index()
         {
             return "This is my default action...";
@@ -21,7 +24,10 @@ namespace AngularApp2.Controllers
             return "yeh";
         }
         
-        public AccountController(){}
+        public AccountController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         [HttpGet("login")]
         public string Login(string email, string password)//tested a little
         {
@@ -66,9 +72,17 @@ namespace AngularApp2.Controllers
                 Users user = db.Users.Where(u => u.UserId == user_id).FirstOrDefault();
                 if (user != null)
                 {
-                    user.Email = email;
-                    db.SaveChanges();
-                    return StatusCode(200);
+                    Users otherUser = db.Users.Where(u => u.Email == email).FirstOrDefault();
+                    if (otherUser == null)
+                    {
+                        user.Email = email;
+                        db.SaveChanges();
+                        return StatusCode(200);                        
+                    }
+                    else
+                    {
+                        return StatusCode(406);
+                    }                    
                 }
                 else
                 {
@@ -76,7 +90,7 @@ namespace AngularApp2.Controllers
                 }
             }
             
-        }
+        }//tested a bit
 
         [HttpPost("ChangeDob")]
         public IActionResult ChangeDob(int user_id, string date)
@@ -96,7 +110,7 @@ namespace AngularApp2.Controllers
                 }
             }
 
-        }
+        }//tested a bit
 
         [HttpPost("ChangeName")]
         public IActionResult ChangeName(int user_id, string name)
@@ -116,6 +130,70 @@ namespace AngularApp2.Controllers
                 }
             }
 
+        }//not tested
+
+        [HttpPost("ChangePassword")]
+        public IActionResult ChangePassword(int user_id, string prevPass, string pass)
+        {
+            using (DiplomusContext db = new DiplomusContext())
+            {
+                Users user = db.Users.Where(u => u.UserId == user_id && u.Password==prevPass).FirstOrDefault();
+                if (user != null)
+                {
+                    user.Password = pass;
+                    db.SaveChanges();
+                    return StatusCode(200);
+                }
+                else
+                {
+                    return StatusCode(400);
+                }
+            }
+
+        }//not tested
+
+
+        [HttpPost("ChangePic")]
+        public IActionResult ChangePic(int user_id, string pic)
+        {
+            using (DiplomusContext db = new DiplomusContext())
+            {
+                Users user = db.Users.Where(u => u.UserId == user_id).FirstOrDefault();
+                if (user != null)
+                {
+                    user.UserImg = pic;
+                    db.SaveChanges();
+                    return StatusCode(200);
+                }
+                else
+                {
+                    return StatusCode(400);
+                }
+            }
         }
+
+        [HttpGet("MakeAdmin")]
+        public IActionResult MakeAdmin(int user_id, string secret)
+        {
+            if (secret != _configuration.GetValue<String>("secret"))
+            {
+                return StatusCode(403);
+            }
+            using (DiplomusContext db = new DiplomusContext())
+            {
+                Users user = db.Users.Where(u => u.UserId == user_id).FirstOrDefault();
+                if (user != null)
+                {
+                    user.Role = "admin";
+                    db.SaveChanges();
+                    return StatusCode(200);
+                }
+                else
+                {
+                    return StatusCode(400);
+                }
+            }
+        }
+
     }
 }
