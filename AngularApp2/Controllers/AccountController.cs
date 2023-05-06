@@ -193,7 +193,54 @@ namespace AngularApp2.Controllers
                     return StatusCode(400);
                 }
             }
+        }//tested a bit
+
+        [HttpGet("MakeUser")]
+        public IActionResult MakeUser(int user_id, string secret)//maybe should optimize because very similar funcs but later
+        {
+            if (secret != _configuration.GetValue<String>("secret"))
+            {
+                return StatusCode(403);
+            }
+            using (DiplomusContext db = new DiplomusContext())
+            {
+                Users user = db.Users.Where(u => u.UserId == user_id).FirstOrDefault();
+                if (user != null)
+                {
+                    user.Role = "user";
+                    db.SaveChanges();
+                    return StatusCode(200);
+                }
+                else
+                {
+                    return StatusCode(400);
+                }
+            }
         }
 
+        [HttpGet("DeleteUser")]
+        public IActionResult DeleteUser(int user_id, string secret)
+        {
+            if (secret != _configuration.GetValue<String>("secret"))
+            {
+                return StatusCode(403);
+            }
+            using (DiplomusContext db = new DiplomusContext())
+            {
+                Users user = db.Users.Where(u => u.UserId == user_id).FirstOrDefault();
+                if (user != null)
+                {
+                    db.Users.Remove(user);
+                    db.SaveChanges();
+                    return StatusCode(200);
+                }
+                else
+                {
+                    return StatusCode(400);
+                }
+            }
+        }//tested a bit
+
     }
+
 }
