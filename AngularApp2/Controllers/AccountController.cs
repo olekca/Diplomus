@@ -11,6 +11,7 @@ namespace AngularApp2.Controllers
     
     [ApiController]
     [Route("[controller]")]
+    
     public class AccountController : ControllerBase
     {
         private readonly IConfiguration _configuration;

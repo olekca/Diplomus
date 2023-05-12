@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { tap, delay } from 'rxjs/operators';
+import { tap, delay, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +9,10 @@ import { tap, delay } from 'rxjs/operators';
 export class AuthService {
 
   isUserLoggedIn: boolean = false;
+  userId: number = -1;
+  role: string = "";
 
-  login(userName: string, password: string): Observable<any> {
+  login1(userName: string, password: string): Observable<any> {
     console.log(userName);
     console.log(password);
     this.isUserLoggedIn = userName == 'admin' && password == 'admin';
@@ -24,10 +26,46 @@ export class AuthService {
     );
   }
 
-  logout(): void {
-    this.isUserLoggedIn = false;
-    localStorage.removeItem('isUserLoggedIn');
+
+login(email: string, password: string): Observable < boolean > {
+  console.log('https://localhost:7053/account/login?email=' + email + "&password=" + password);
+  return this.http.get<LoginDTO>('https://localhost:7053/account/login?email=' + email + "&password=" + password)
+    .pipe(
+      map(result => {
+        this.isUserLoggedIn = result.IsLoggedIn;
+        console.log(this.isUserLoggedIn);
+        this.userId = result.UserId;
+        console.log(this.userId);
+        this.role = result.Role;
+        console.log(this.role);
+        localStorage.setItem('isUserLoggedIn', this.isUserLoggedIn ? "true" : "false");
+        localStorage.setItem('userId', this.userId.toString());
+        localStorage.setItem('role', this.role);
+        return this.isUserLoggedIn;
+      })
+    );
+}
+
+
+  loginServer(email: string, password: string): Observable<LoginDTO> {
+    return this.http.get<LoginDTO>('https://localhost:7053/account/login?email=' + email + "&password=" + password);
   }
 
-  constructor() { }
+
+  logout(): void {
+    this.isUserLoggedIn = false;
+    this.userId = -1;
+    this.role = "";
+    localStorage.removeItem('isUserLoggedIn');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('role');
+  }
+
+  constructor(private http: HttpClient) { }
+
+}
+interface LoginDTO {
+  IsLoggedIn: boolean,
+  UserId: number,
+  Role: string
 }

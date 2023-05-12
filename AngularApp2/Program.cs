@@ -21,8 +21,21 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         });
 //builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddDbContext<DiplomusContext>(options => options.UseNpgsql(con), ServiceLifetime.Transient);
-var app = builder.Build();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+
+            //you can configure your custom policy
+            builder.AllowAnyOrigin()
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+        });
+});
+var app = builder.Build();
+app.UseCors();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
