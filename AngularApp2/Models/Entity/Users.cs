@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace AngularApp2.Models.Entity
@@ -13,5 +12,6 @@ namespace AngularApp2.Models.Entity
         public string? Role { get; set; }
         public DateOnly? DayOfBirth { get; set; }
         public string? UserImg { get; set; }
+        public int[]? Needs { get; set; }
     }
 }

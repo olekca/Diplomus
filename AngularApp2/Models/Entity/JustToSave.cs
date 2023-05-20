@@ -1,9 +1,11 @@
-﻿namespace AngularApp2.Models.Entity
+﻿/*using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+
+namespace AngularApp2.Models.Entity
 {
-    public class JustToSave
-    {
-        /*
-         public partial class DiplomusContext : DbContext
+    public partial class DiplomusContext : DbContext
     {
         public DiplomusContext()
         {
@@ -14,10 +16,10 @@
         {
         }
 
+        public virtual DbSet<Nutrients> Nutrients { get; set; } = null!;
         public virtual DbSet<Users> Users { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        
         {
             if (!optionsBuilder.IsConfigured)
             {
@@ -28,6 +30,33 @@
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Nutrients>(entity =>
+            {
+                entity.HasKey(e => e.NutrientId)
+                    .HasName("Nutrients_pkey");
+
+                entity.ToTable("nutrients");
+
+                entity.Property(e => e.NutrientId)
+                    .HasColumnName("nutrient_id")
+                    .HasDefaultValueSql("nextval('\"Nutrients_Nutrient_id_seq\"'::regclass)");
+
+                entity.Property(e => e.DailyDose).HasColumnName("daily_dose");
+
+                entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.IsHydrophobic).HasColumnName("is_hydrophobic");
+
+                entity.Property(e => e.IsThermophobic).HasColumnName("is_thermophobic");
+
+                entity.Property(e => e.NutrientName)
+                    .HasMaxLength(50)
+                    .HasColumnName("nutrient_name");
+
+                entity.Property(e => e.NutrientNameUa)
+                    .HasMaxLength(50)
+                    .HasColumnName("nutrient_name_ua");
+            });
             modelBuilder.Entity<Users>(entity =>
             {
                 entity.HasKey(e => e.UserId)
@@ -63,6 +92,5 @@
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
-         */
-    }
 }
+*/

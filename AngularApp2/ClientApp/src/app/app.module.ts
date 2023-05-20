@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -15,6 +15,8 @@ import { LogoutComponent } from './logout/logout.component';
 import { ExpenseGuard } from './guard/expense.guard';
 import { ReactiveFormsModule } from '@angular/forms'; 
 import { AuthService } from './auth/auth.service';
+import { RegisterComponent } from './register/register.component';
+
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { AuthService } from './auth/auth.service';
     ExampleComponent,
     LoginComponent,
     LogoutComponent,
+    RegisterComponent
    
     
   ],
@@ -38,6 +41,7 @@ import { AuthService } from './auth/auth.service';
     RouterModule.forRoot([
       { path: 'login', component: LoginComponent },
       { path: 'logout', component: LogoutComponent },
+      { path: 'register', component: RegisterComponent },
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent, canActivate: [ExpenseGuard] },
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [ExpenseGuard] },

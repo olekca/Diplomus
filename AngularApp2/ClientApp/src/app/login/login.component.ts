@@ -38,8 +38,6 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.userName, this.password)
       .subscribe(data => {
-        console.log("Is Login Success: " + data);
-
         if (data) this.router.navigate(['/counter']);
       });
   }

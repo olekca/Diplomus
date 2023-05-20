@@ -242,6 +242,13 @@ namespace AngularApp2.Controllers
             }
         }//tested a bit
 
+        [HttpGet("user/id=int")]
+        public string getUser(int id)
+        {
+            return "";
+        }
+
+
     }
 
 }
