@@ -1,0 +1,47 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+.container{
+    height:80%
+}
+body {
+  height: 100%;
+  min-height: 100vh;
+}
+.goto {
+  padding: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  font-size: 20px;
+}
+
+.back {
+  background-color: #B5CCAB;
+}
+button {
+  margin: 10px;
+  font-size: 20px;
+}
+label{
+    margin: 15px;
+    font-size: 22px;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+}
+.inrow {
+  flex-direction: row;
+}
+.needs{
+    width:40%;
+}
+.desc{
+    width:40%;
+    font-size: 17px;
+    margin:30px;
+}
+
+.needName{
+    font-size: 20px;
+    
+}
+

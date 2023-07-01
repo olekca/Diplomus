@@ -3,13 +3,19 @@ a.navbar-brand {
   text-align: center;
   word-break: break-all;
 }
-
+nav {
+  background-color: #527738;
+  
+}
+a{
+    color: aliceblue;
+}
 html {
-  font-size: 14px;
+  font-size: 30px;
 }
 @media (min-width: 768px) {
   html {
-    font-size: 16px;
+    font-size: 30px;
   }
 }
 

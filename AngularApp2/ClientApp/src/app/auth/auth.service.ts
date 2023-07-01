@@ -52,11 +52,11 @@ login(email: string, password: string): Observable < boolean > {
       .pipe(
         map(result => {
           this.isUserLoggedIn = result.IsSuccessful;
-          console.log(this.isUserLoggedIn);
+         // console.log(this.isUserLoggedIn);
           this.userId = result.UserId;
-          console.log(this.userId);
+         // console.log(this.userId);
           this.role = result.Role;
-          console.log(this.role);
+         // console.log(this.role);
           localStorage.setItem('isUserLoggedIn', this.isUserLoggedIn ? "true" : "false");
           localStorage.setItem('userId', this.userId.toString());
           localStorage.setItem('role', this.role);

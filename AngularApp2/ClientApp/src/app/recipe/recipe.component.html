@@ -1,0 +1,129 @@
+<div>
+  <div>
+    <div *ngIf="statSuccess">Statistics updated successfully</div>
+    <button (click)="addToStat()" *ngIf="!statAdding" class="btn btn-dark">Add this meal to statistics</button>
+    <div *ngIf="statAdding">
+      Please, insert amount in grams of eaten meal
+      <input type="number" min="1" step="1" [(ngModel)]="eatenAmount" />
+      <button (click)="sendStat()" class="btn btn-success">Save</button>
+      <button class="btn btn-secondary" (click)="cancelStat()">Cancel</button><!--Add functional to this fckng button-->
+    </div>
+  </div>
+  
+  <div>
+
+    <img [src]="recipe.RecipeImg" alt="Image" width="200px" height="200px">
+
+    <div *ngIf="editMode">
+      <div *ngIf="!imgEditing">
+        <button (click)="editImg()"  class="btn btn-info">Change image</button>
+      </div>
+
+      <div *ngIf="imgEditing">
+        Add hyperlink to desired picture, please
+
+        <input type="text" [(ngModel)]="imgLink" />
+
+        <button (click)="saveImg()" class="btn btn-success">Save</button>
+
+      </div>
+    </div>
+    
+
+  </div>
+  <div>   
+    <label *ngIf="!editMode">{{recipe.RecipeName}}</label>
+    <input type="text" *ngIf="editMode" [(ngModel)]="recipe.RecipeName"/>
+  </div>
+  
+  <button *ngIf="canChangeRecipe && !editMode" (click)="editRecipe()" class="btn btn-warning">Edit recipe</button>
+  <div>
+    <label>Ingredients</label>
+    <table>
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Measurement type</th>
+          <th>Measure number</th>
+          <th *ngIf="editMode">buttons</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let prod of recipe.Products; let i = index">
+          <td>{{ prod.ProductName }}</td>
+          <td>{{ prod.MeasureType }}</td>
+          <td>{{ prod.MeasureNumber }}</td>
+          <td *ngIf="editMode">
+            <button (click)="editProduct(prod, i)" class="btn btn-info">Edit</button>
+            <button (click)="deleteProduct(i)" class="btn btn-danger">Delete</button>
+          </td>
+        </tr>
+        <tr *ngIf="editMode && ingrEditing">
+          <td>
+            <input type="text" [(ngModel)]="editedIngr.ProductName" disabled/>
+          </td>
+          <td>
+            <select [(ngModel)]="editedIngr.MeasureChar">
+              <option *ngFor="let type of Measures" [value]="type.Type">{{ type.Name }}</option>
+            </select>
+          </td>
+          <td>
+            <input type="number" min="0" step="any" [(ngModel)]="editedIngr.MeasureNumber" />
+          </td>
+          <td>
+            <button (click)="addIngr()" class="btn btn-success">Save</button>
+            <button (click)="cancel()" class="btn btn-secondary">Cancel</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="editMode">
+    <button *ngIf="!ingrEditing" (click)="editIngr()" class="btn btn-info">Add new ingredient</button>
+    <div *ngIf="ingrChoosing">
+
+      <mat-form-field>
+        <mat-label>Choose new product</mat-label>       
+        <input type="text" matInput [formControl]="productsInput" (input)="searchProducts()">
+      </mat-form-field>
+
+      <mat-select [formControl]="productsInput" (selectionChange)="addProduct($event.value)" #selectProducts>
+        <mat-option *ngFor="let suggestion of productsSuggestions" [value]="suggestion">
+          {{ suggestion.ProductName }}
+        </mat-option>
+      </mat-select>
+    </div>
+    </div>
+
+  </div>
+  <div>
+    <label>
+      Steps
+    </label>
+    
+    <div *ngFor="let step of recipe.Steps; let i = index">
+      {{step}}
+      <div *ngIf="editMode">
+        <button (click)="editStep(i)" class="btn btn-info">Edit</button>
+        <button (click)="deleteStep(i)" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+    <button *ngIf="editMode && !stepsEdit" (click)="editStep(-1)" class="btn btn-info">Add new step</button>
+    <div *ngIf="stepsEdit">
+      <textarea [(ngModel)]="editedStep" cols="40" rows="5"></textarea>
+      <button (click)="saveStep()" class="btn btn-success">Save step</button>
+    </div>
+  </div>
+  <button (click)="sendChanges()" *ngIf="editMode" class="btn btn-success">Save recipe</button>
+</div>
+
+<br/>
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+
+
+

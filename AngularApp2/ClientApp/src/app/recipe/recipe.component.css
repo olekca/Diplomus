@@ -1,0 +1,13 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+table {
+  margin-left: 40px;
+}
+label{
+    font-size:30px;
+}
+button{
+   margin:10px;
+}
+td {
+  margin: 15px;
+}

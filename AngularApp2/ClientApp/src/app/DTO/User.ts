@@ -1,11 +1,12 @@
 import { Data } from "popper.js";
 
-export interface UserDTO {
+export interface User {
   UserId: number;
   UserName: string;
   Email: string;
   Password: string;
   Role: string;
-  DayOfBirth: Data;
+  DayOfBirth: Date;
   UserImg: string;
 }
+

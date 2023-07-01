@@ -1,0 +1,42 @@
+<body>
+  <div>
+    <label>
+      Statistics for
+    </label>
+    
+    <!--choose time field-->
+    <select (change)="onSelectionChange($event)">
+      <option value="option1">Today</option>
+      <option value="option2">Yesterday</option>
+      <option value="option3">Two days ago</option>
+      <option value="option4">Three days ago</option>
+      <option value="option5">Last week</option>
+      <option value="option6">Last month</option>
+    </select>
+  </div>
+
+  <div *ngIf="recipesNeeded">
+    <!--recipes list-->
+    <div *ngIf="recipesEmpty"><label>There are no recipes added :( </label></div>
+    <div *ngIf="!recipesEmpty">
+      <div *ngFor="let recipe of recipes">
+        <img [src]="recipe.RecipeImg" alt="Image" width="100px" height="100px">
+        <label>{{recipe.RecipeName}}</label>
+        <label>Amount: {{recipe.Amount}} grams</label><!--Load recipes and if is empty also do something, ugh-->
+
+      </div>
+
+    </div>
+  </div>
+
+  <div *ngIf="!recipesEmpty">
+    <!--Here is statistics-->
+    <div *ngFor="let stat of stats">
+      {{stat.NutrientName}}
+      <div [ngStyle]="{ 'background-color': stat.Color, 'width': 50+stat.NutrientPercent*5 + 'px' }">
+        {{stat.NutrientPercent}}
+      </div>
+      {{stat.NutrientAmount}} / {{stat.DailyDose}}  {{stat.DoseMeasure}}
+    </div>
+  </div>
+</body>

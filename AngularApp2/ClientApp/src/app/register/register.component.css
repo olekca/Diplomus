@@ -1,0 +1,26 @@
+body {
+  height: 100%;
+  min-height: 100vh;
+}
+.container{
+    margin-bottom:50px;
+}
+.register{
+    margin-left:25%;
+    margin-right:25%;
+    width:50%;
+}
+label{
+    margin: 20px;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+html, body, .container {
+  height: 120%;
+}
+button {
+  margin: 20px;
+  padding: 10px;
+
+  font-size: 20px;
+}

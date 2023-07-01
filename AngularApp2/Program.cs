@@ -4,6 +4,7 @@ using AutoMapper;
 using AngularApp2.Models.Entity;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Microsoft.EntityFrameworkCore;
+using AngularApp2.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ string con = "Host=localhost;Port=5432;Database=Diplomus;Username=postgres;Passw
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddControllers();
+builder.Services.AddAutoMapper(typeof(AppMappingProfile));
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
         .AddCookie(options => //CookieAuthenticationOptions
         {
@@ -54,7 +56,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
-//Scaffold-DbContext "Host=localhost;Port=5432;Database=diplomus;Username=postgres;Password=qwerty123456" Npgsql.EntityFrameworkCore.PostgreSQL -OutputDir Models/Entity -Tables "nutrients" -NoPluralize
+//Scaffold-DbContext "Host=localhost;Port=5432;Database=diplomus;Username=postgres;Password=qwerty123456" Npgsql.EntityFrameworkCore.PostgreSQL -OutputDir Models/Entity -Tables "nutrients","daily_diet", "needs", "needs_nutrients", "products", "products_nutrients", "recipes", "recipes_products","users" -NoPluralize
 app.MapFallbackToFile("index.html");
 
 app.Run();

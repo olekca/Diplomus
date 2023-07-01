@@ -1,0 +1,156 @@
+<button (click)="openSearch()" class="btn btn-info">Filter</button>
+<button (click)="goToRecipesAdd()" class="btn btn-dark" *ngIf="isUserAdmin">Add new recipe</button>
+<div *ngIf="searchOpen">
+
+  <div>
+    <br />
+    <br />
+    <label>
+      Search
+    </label>
+
+    <input type="text" [(ngModel)]="searchLine" />
+
+    <br />
+    <label>
+      excluded products
+    </label>
+
+    <div>
+      <!--Excluded prodcuts-->
+      <div *ngFor="let prod of excludedProducts; let i = index">
+        <div class="alert alert-dark">
+          {{prod.ProductName}}
+          <button (click)="DeleteExcluded(i)" class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+    </div>
+    <mat-form-field>
+      <mat-label>Search Products</mat-label>
+      <input type="text" matInput [formControl]="excludedProductsInput" (input)="searchExcludedProducts()">
+    </mat-form-field>
+
+    <mat-select [formControl]="excludedProductsInput" (selectionChange)="addExcludedProduct($event.value)" #selectExcludedProducts>
+      <mat-option *ngFor="let suggestion of excludedProductsSuggestions" [value]="suggestion">
+        {{ suggestion.ProductName }}
+      </mat-option>
+    </mat-select>
+
+    <br />
+
+
+
+
+  </div>
+
+  <div>
+    <label>
+      Included products
+    </label>
+
+    <br />
+    <div>
+      <!--Included products-->
+      <div *ngFor="let prod of includedProducts;  let i = index">
+        <div class="alert alert-dark">
+          {{prod.ProductName}}
+          <button (click)="DeleteIncluded(i)" class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+    </div>
+    <mat-form-field>
+      <mat-label>Search Products</mat-label>
+      <input type="text" matInput [formControl]="includedProductsInput" (input)="searchIncludedProducts()">
+    </mat-form-field>
+
+    <mat-select [formControl]="includedProductsInput" (selectionChange)="addIncludedProduct($event.value)" #selectIncludedProducts>
+      <mat-option *ngFor="let suggestion of includedProductsSuggestions" [value]="suggestion">
+        {{ suggestion.ProductName }}
+      </mat-option>
+    </mat-select>
+
+    <br />
+  </div>
+
+  <div>
+    <label>
+      Included needs
+    </label>
+
+    <br />
+    <div>
+      <!--Included needs-->
+      <div *ngFor="let need of includedNeeds;  let i = index">
+        <div class="alert alert-dark">
+          {{need.NeedsName}}
+          <button (click)="DeleteNeed(i)" class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+    </div>
+    <mat-form-field>
+      <mat-label>Search Needs</mat-label>
+      <input type="text" matInput [formControl]="includedNeedsInput" (input)="searchNeeds()">
+    </mat-form-field>
+
+    <mat-select [formControl]="includedNeedsInput" (selectionChange)="addNeed($event.value)" #selectIncludedNeeds>
+      <mat-option *ngFor="let suggestion of includedNeedsSuggestions" [value]="suggestion">
+        {{ suggestion.NeedsName }}
+      </mat-option>
+    </mat-select>
+    <button (click)="addUsersNeeds()" class="btn btn-dark">Add user needs</button>
+
+    <br />
+  </div>
+  <br />
+  <button (click)="sendSearchRequest(1)" class="btn btn-primary">Search</button>
+</div>
+
+
+<div>
+  <div *ngIf="recipeDeleting">
+    Write down secret key to confirm deleting recipe {{deletedRecipeId}}, please
+    <input type="password" [(ngModel)]="secretKey" />
+    <button (click)="deleteRecipe()" class="btn btn-danger">Delete</button>
+    <div class="alert alert-danger"
+         *ngIf="!secretValid">
+      Secret key is wrong
+    </div>
+
+  </div>
+  <div class="alert alert-success"
+       *ngIf="successDelete">
+    Delete was sucessful!
+  </div>
+</div>
+
+
+<div>
+  <div *ngIf="noRecipes">
+    There are no recipes :(
+  </div>
+  <div *ngFor="let recipe of recipes" >
+    
+    <img [src]="recipe.RecipeImg" alt="Image" width="100px" height="100px" (click)="goToRecipes(recipe.RecipeId)">
+    <label (click)="goToRecipes(recipe.RecipeId)">{{recipe.RecipeName}}</label>
+    <label>There will be something about recipe</label>
+    <div *ngIf="isUserAdmin">
+      <button (click)="goToRecipesEdit(recipe.RecipeId)" class="btn btn-info">Edit</button>
+      <button (click)="startDeleteRecipe(recipe.RecipeId)" class="btn btn-warning">Delete</button>
+    </div>
+  </div>
+
+</div>
+
+
+
+<div class="pagination">
+  <button [disabled]="page === 1" (click)="onPageChange(page - 1)" class="btn btn-light">Previous</button>
+  <span>{{ page }}</span>
+  <button [disabled]="page === maxPage" (click)="onPageChange(page + 1)" class="btn btn-light">Next</button>
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />

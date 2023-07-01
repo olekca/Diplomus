@@ -19,13 +19,14 @@ export class LoginComponent implements OnInit {
   userName: string;
   password: string;
   formData: FormGroup;
+  loginFail = false;
 
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.formData = new FormGroup({
-      userName: new FormControl("admin"),
-      password: new FormControl("admin"),
+      userName: new FormControl(""),
+      password: new FormControl(""),
     });
   }
 
@@ -33,12 +34,19 @@ export class LoginComponent implements OnInit {
     this.userName = data.userName;
     this.password = data.password;
 
-    console.log("Login page: " + this.userName);
-    console.log("Login page: " + this.password);
-
     this.authService.login(this.userName, this.password)
       .subscribe(data => {
-        if (data) this.router.navigate(['/counter']);
+        if (data) {
+          this.loginFail = false;
+          this.router.navigate(['/recipes']);
+
+        }
+        else {
+          this.loginFail = true;
+        }
       });
+  }
+  goToSignUp() {
+    this.router.navigate(['/register']);
   }
 }

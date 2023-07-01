@@ -16,6 +16,7 @@ namespace AngularApp2.Models.Entity
         {
         }
 
+        public virtual DbSet<DailyDiet> DailyDiet { get; set; } = null!;
         public virtual DbSet<Needs> Needs { get; set; } = null!;
         public virtual DbSet<NeedsNutrients> NeedsNutrients { get; set; } = null!;
         public virtual DbSet<Nutrients> Nutrients { get; set; } = null!;
@@ -36,6 +37,37 @@ namespace AngularApp2.Models.Entity
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<DailyDiet>(entity =>
+            {
+                entity.ToTable("daily_diet");
+
+                entity.HasIndex(e => e.UserId, "fki_daily_diet_fk1");
+
+                entity.HasIndex(e => e.RecipeId, "fki_daily_diet_fk2");
+
+                entity.Property(e => e.DailyDietId).HasColumnName("daily_diet_id");
+
+                entity.Property(e => e.Amount).HasColumnName("amount");
+
+                entity.Property(e => e.Date).HasColumnName("date");
+
+                entity.Property(e => e.RecipeId).HasColumnName("recipe_id");
+
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.HasOne(d => d.Recipe)
+                    .WithMany(p => p.DailyDiet)
+                    .HasForeignKey(d => d.RecipeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("daily_diet_fk2");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.DailyDiet)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("daily_diet_fk1");
+            });
+
             modelBuilder.Entity<Needs>(entity =>
             {
                 entity.ToTable("needs");
@@ -193,6 +225,8 @@ namespace AngularApp2.Models.Entity
                 entity.Property(e => e.RecipeId).HasColumnName("recipe_id");
 
                 entity.Property(e => e.Ingredients).HasColumnName("ingredients");
+
+                entity.Property(e => e.RecipeImg).HasColumnName("recipe_img");
 
                 entity.Property(e => e.RecipeName)
                     .HasMaxLength(200)

@@ -1,0 +1,105 @@
+<body>
+  <div class="back" *ngIf="thisUser">
+    <button (click)="goToStat()" class="btn btn-light goto">User statistic</button>
+    <button (click)="goToNeeds()" class="btn btn-light goto">User needs</button>
+  </div>
+  <div class="container">
+
+    <div class="row">
+
+      <img [src]="user.UserImg" alt="Image" width="300px" height="300px">
+
+      <div *ngIf="!imgEditing">
+        <button (click)="editImg()" class="btn btn-info">Change image</button>
+      </div>
+
+      <div *ngIf="imgEditing">
+        Add hyperlink to desired picture, please
+
+        <input type="text" [(ngModel)]="imgLink" />
+
+        <button (click)="saveImg()" class="btn btn-success">Save</button>
+
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div>
+        <label>Name:</label>
+        <input type="text" [(ngModel)]="user.UserName" [disabled]="!nameEditing">
+
+        <div *ngIf="!nameEditing">
+          <button (click)="editName()" class="btn btn-info">Edit</button>
+        </div>
+        <div *ngIf="nameEditing">
+          <button (click)="saveName()" class="btn btn-success">Save</button>
+        </div>
+      </div>
+
+
+      <div>
+        <label>Email:</label>
+
+        <input type="email" [(ngModel)]="user.Email" [disabled]="!emailEditing">
+        <div class="alert alert-danger"
+             *ngIf="!emailValid">
+          Email is not valid
+        </div>
+        <div *ngIf="!emailEditing">
+          <button (click)="editEmail()" class="btn btn-info">Edit</button>
+        </div>
+        <div *ngIf="emailEditing">
+          <button (click)="saveEmail()" class="btn btn-success">Save</button>
+        </div>
+      </div>
+
+      <div>
+        <label>Password:</label>
+        <input type="password" [(ngModel)]="user.Password" [disabled]="true">
+        <div *ngIf="!passwordEditing">
+          <button (click)="editPassword()" class="btn btn-info">Edit</button>
+        </div>
+
+        <div *ngIf="passwordEditing">
+          <div *ngIf="passwordEditing">Print your old password</div>
+          <input type="password" [(ngModel)]="oldPassword" />
+          <div *ngIf="passwordEditing">Print your new password</div>
+          <input type="password" [(ngModel)]="newPassword" />
+          <div class="alert alert-danger"
+               *ngIf="!passwordValid">
+            Password must contain big letters, small letters, numbers and be at least 8 characters long
+          </div>
+          <div class="alert alert-danger"
+               *ngIf="passwordNotSame">
+            Previous password is uncorrect
+          </div>
+          <button (click)="savePassword()" class="btn btn-success">Save</button>
+        </div>
+      </div>
+
+
+      <div>
+        <label>Role:</label>
+        <input type="text" [(ngModel)]="user.Role" [disabled]="true">
+        <div *ngIf="canChangeRole">
+          <button (click)="editRole()" class="btn btn-info">Change role</button>
+        </div>
+        <div *ngIf="roleEditing">
+          Write down secret key, please
+          <input type="password" [(ngModel)]="secretKey" />
+          <button (click)="saveRole()" class="btn btn-success">Save</button>
+          <div class="alert alert-danger"
+               *ngIf="!secretValid">
+            Secret key is wrong
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <br />
+  <br />
+  <br />
+</body>

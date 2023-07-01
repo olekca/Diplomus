@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule, FormsModule, Validators, NgControl, NgForm, NgModel, Validator, AbstractControl, ValidatorFn } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
-import { UserDTO } from '../DTO/User'
+import { User } from '../DTO/User'
 
 
 
@@ -15,6 +15,7 @@ import { UserDTO } from '../DTO/User'
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
+  styleUrls:['./register.component.css'],
   styles: [`
         input.ng-touched.ng-invalid {border:solid red 2px;}
         input.ng-touched.ng-valid {border:solid green 2px;}
@@ -84,10 +85,13 @@ export class RegisterComponent implements OnInit {
 
     this.authService.login(this.userName, this.password)
       .subscribe(data => {
-        if (data) this.router.navigate(['/counter']);
+        if (data) this.router.navigate(['/recipes']);
       });
   }
-  
+
+  goToLogIn() {
+    this.router.navigate(['/login']);
+  }
 
 }
 

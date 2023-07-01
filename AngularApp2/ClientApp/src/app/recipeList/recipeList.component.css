@@ -1,0 +1,18 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+.pagination {
+  margin-left: 40%;
+  margin-top: 20px;
+}
+label{
+    margin:10px;
+    font-size:20px;
+}
+img{
+    margin:10px;
+}
+button{
+    font-size:20px;
+}
+mat-select{
+    max-width:500px;
+}
