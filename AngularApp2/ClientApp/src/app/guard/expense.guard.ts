@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -25,8 +26,29 @@ export class ExpenseGuard implements CanActivate {
     let userId: number = Number.parseInt(localStorage.getItem('userId')!);
     let role: string = localStorage.getItem('role')!;
 
-    if (isLogged != null && isLogged == "true") {
-      if (url == "/login") {
+    
+    
+    if (isLogged == 'true') {
+      if (url == '/login' || url == '/register') {
+        return this.router.parseUrl('/recipes');
+      }
+      if (role == 'admin') {
+        return true;
+      } else {
+        if (url =='/users') {
+          return this.router.parseUrl('/recipes');
+        }
+      }
+      return true;
+    }
+    else {
+      if (url == '/login' || url == '/register') {
+        return true;
+      }
+      return this.router.parseUrl('/login');
+    }
+    /*if (isLogged != null && isLogged == "true") {
+      if (url == "/login" ) {
         if (role == "admin") {
           this.router.parseUrl('/example');
         }
@@ -39,7 +61,7 @@ export class ExpenseGuard implements CanActivate {
         return true;
     } else {
       return this.router.parseUrl('/login');
-    }
+    }*/
     return this.router.parseUrl('/login');
   }
 }

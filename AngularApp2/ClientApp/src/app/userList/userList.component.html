@@ -1,0 +1,54 @@
+<div *ngIf="userDeleting">
+  Write down secret key to confirm deleting user {{deletedUserId}}, please
+  <input type="password" [(ngModel)]="secretKey" />
+  <button (click)="deleteUser()" class="btn btn-danger">Delete</button>
+  <div class="alert alert-danger"
+       *ngIf="!secretValid">
+    Secret key is wrong
+  </div>
+  
+</div>
+<div class="alert alert-success"
+     *ngIf="successDelete">
+  Delete was sucessful!
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Password</th>
+      <th>Role</th>
+      <th>User avatar</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.UserId }}</td>
+      <td>{{ user.UserName }}</td>
+      <td>{{ user.Email }}</td>
+      <td>{{ user.Password }}</td>
+      <td>{{ user.Role }}</td>
+      <td><img [src]="user.UserImg" alt="Image" width="100px" height="100px"></td>
+      <td>
+        <button (click)="editUser(user.UserId)" class="btn btn-info">Edit</button>
+        <button (click)="startDeleteUser(user.UserId)" class="btn btn-warning">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="pagination">
+  <button [disabled]="page === 1" (click)="onPageChange(page - 1)" class="btn btn-light">Previous</button>
+  <span>{{ page }}</span>
+  <button [disabled]="page === maxPage" (click)="onPageChange(page + 1)" class="btn btn-light">Next</button>
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />

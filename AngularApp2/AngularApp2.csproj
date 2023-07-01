@@ -31,6 +31,43 @@
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="ClientApp\src\app\DTO\Account.ts" />
+    <None Remove="ClientApp\src\app\DTO\NeedDTO.ts" />
+    <None Remove="ClientApp\src\app\DTO\NeedShort.ts" />
+    <None Remove="ClientApp\src\app\DTO\ProductShort.ts" />
+    <None Remove="ClientApp\src\app\DTO\Recipe.ts" />
+    <None Remove="ClientApp\src\app\DTO\RecipeNutrientsInfo.ts" />
+    <None Remove="ClientApp\src\app\DTO\StatDTO.ts" />
+    <None Remove="ClientApp\src\app\DTO\User.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\DTO\Account.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\DTO\NeedDTO.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\DTO\NeedShort.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\DTO\ProductShort.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\DTO\Recipe.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\DTO\RecipeNutrientsInfo.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\DTO\StatDTO.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\DTO\User.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ClientApp\src\app\recipeList\recipeList.component.ts">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\app\recipe\recipe.component.ts">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\app\stat\stat.component.ts">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\app\UserNeeds\userNeeds.component.ts">
+      <SubType>Code</SubType>
+    </None>
+  </ItemGroup>
+
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">

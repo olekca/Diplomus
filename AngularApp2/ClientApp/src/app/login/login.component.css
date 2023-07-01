@@ -5,5 +5,15 @@
 }
 
 input {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+}
+
+button{
+    margin:20px;
+}
+label{
+    margin:15px;
+}
+.container {
+  min-height: 100vh;
 }

@@ -1,0 +1,48 @@
+<body>
+
+  <div class="container">
+
+    <div class="back">
+      <button (click)="goToStat()" class="btn btn-light goto">User statistic</button>
+      <button (click)="goToAccount()" class="btn btn-light goto">User account</button>
+    </div>
+    <div class="row">
+      <div class="needs inrow">
+        <label>Included needs</label>        
+        <div>
+          <!--Included needs-->
+          <div *ngFor="let need of needs; let i = index">
+            <div class="alert alert-dark needName" (click)="clickNeed(i)">
+              {{need.NeedsName}}
+              <button (click)="DeleteNeed(i)" *ngIf="editingMode" class="btn btn-danger marg">>Delete</button>
+            </div>
+          </div>
+          <button *ngIf="!editingMode" (click)="setEditingMode()" class="btn btn-info">Edit needs</button>
+        </div>
+        <button *ngIf="!addingMode && editingMode" (click)="setAddingMode()" class="btn btn-info">Add need</button>
+        <div *ngIf="addingMode">
+
+          <mat-form-field>
+            <mat-label>Search Needs</mat-label>
+            <input type="text" matInput [formControl]="needsInput" (input)="searchNeeds()">
+          </mat-form-field>
+
+          <mat-select [formControl]="needsInput" (selectionChange)="addNeed($event.value)" #selectNeeds>
+            <mat-option *ngFor="let suggestion of needsSuggestions" [value]="suggestion">
+              {{ suggestion.NeedsName }}
+            </mat-option>
+          </mat-select>
+        </div>
+        <button (click)="sendRequest()" *ngIf="editingMode" class="btn btn-success">>Save Changes</button>
+
+        <br />
+      </div>
+      <div class="inrow desc" >
+  {{clickedNeed.Desc}}
+</div>
+    </div>
+    
+  </div>
+
+
+</body>
