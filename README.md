@@ -7,7 +7,11 @@ link for video with app using
 
 So, this is app I made for my bachelor's degree. It is site with recipes but with opportunity to sort and filter recipes by user diseases.
 
+
 Used technologies:
+
 Frontend - Angular, TypeScrypt, a little bit of Flexbox and Bootstrap
+
 Backend - C Sharp, ASP.Net, Entity Framework, automapper
+
 Database - postgreSQL
